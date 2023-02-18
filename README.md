@@ -3,6 +3,7 @@ Simple Compass App
 
 link[https://gallery.fitbit.com/details/8b6dccef-d463-4bba-b79d-14bd0a173f7a]
 
+![Alt text](https://github.com/SarahBass/FreeCompassFitbit/blob/main/promo/Compass-screenshot-3.png)
 
 A Free Version of a Compass Simulator.
 
