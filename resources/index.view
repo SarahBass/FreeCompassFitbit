@@ -1,0 +1,29 @@
+<svg>
+
+<!-- setting background -->
+  <svg><image id="background" x="0" y="0" width="100%" height="100%" class="background" /></svg>
+   <!-- battery information -->
+  <text id="batteryLabel" x="245" y="25" class="label" />
+  <text id="clockLabel" class="labelclock" />
+  <text id="locationLabel"  class="labellocation" />
+    <text id="gyroLabel"  class="glocation" />
+   <text id="headLabel"  class="gyrolocation" />
+   
+ 
+
+  
+   <svg><image id="rose" x="0" y="0" width="100%" height="100%" class="cuteanimate" /></svg>
+  
+  <svg>
+  <g id= "rosewheel" pointer-events="visible" transform="translate(50%,50%)">
+    <svg><image id="needle" x="$-168" y="$-168" width="336" height="336" /></svg> 
+  </g>
+</svg>
+  
+  <g pointer-events="visible" transform="translate(50%,50%)">
+    <animateTransform attributeType="rotate" from="0" to="360"  dur="3" />
+    <svg><image id="person" x="$-150" y="$-150" width="300" height="300"  /></svg>
+  </g>
+  
+  
+</svg>
