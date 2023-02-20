@@ -10,16 +10,18 @@ import { display } from "display";
 import { today as userActivity } from "user-activity";
 import { units } from "user-settings";
 import { geolocation } from "geolocation";
-import { Gyroscope } from "gyroscope";
+//import { Gyroscope } from "gyroscope";
+import { me as companion } from "companion";
 
 //By Lucas Vieira - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=1247135
 let lateven = 0;
 let latodd = 0;
 let background = document.getElementById("background");
-background.image = "background.png";
+let buttonnumber = 0;
 let person = document.getElementById("person");
 let rose = document.getElementById("rose");
 let rosewheel = document.getElementById("rosewheel");
+let rosecircle = document.getElementById("rosecircle");
 let needle = document.getElementById("needle");
 person.image = "person.png";
 rose.image = "rose.png";
@@ -49,9 +51,10 @@ clock.ontick = (evt) => {
   if (util.zeroPad(hours) < 12){am = "AM";}
   else{am = "PM";}
   
-  
+  if (buttonnumber == 1){background.image = "background1.jpeg";}
+  else{background.image = "background0.jpeg";}
 
-
+if (geolocation && (appbit.permissions.granted("access_location")) && (appbit.permissions.granted("run_background"))){
   
 var watchID = geolocation.watchPosition(locationSuccess, locationError, { timeout: 60 * 1000 });
 
@@ -59,26 +62,25 @@ function locationSuccess(position) {
     console.log("Latitude: " + position.coords.latitude,
                 "Longitude: " + position.coords.longitude);
    rosewheel.groupTransform.rotate.angle = position.coords.heading;
+  if(position.coords.speed > 0 ){rosecircle.animate("enable");}
+  else{rosecircle.animate("disable");}
+  if (position.coords.heading < 30 && position.coords.heading >= 0) {headLabel.text = "N: "+ (position.coords.speed).toFixed(2) + "m/s";}
+  else if (position.coords.heading > 135 && position.coords.heading < 225 ) {headLabel.text = "S: "+ (position.coords.speed).toFixed(2) + "m/s";}
+ else{ headLabel.text= "DEG: "+ (position.coords.heading).toFixed(0);}
   
-  if (position.coords.heading < 10) {headLabel.text = "N: "+ position.coords.speed + "m/s";}
-  else if (position.coords.heading > 170 && position.coords.heading < 190 ) {headLabel.text = "S: "+ position.coords.speed + "m/s";}
- else{ headLabel.text= "DEG: "+ position.coords.heading;}
-   locationLabel.text = "LAT:" + (position.coords.latitude).toFixed(5) + " LON:" + (position.coords.longitude).toFixed(5) ;
+  
+  if ((position.coords.latitude == 0 && position.coords.latitude == 0) || (position.coords.speed == "null")) {locationLabel.text = "BEGIN WALKING AT STEADY SPEED";}
+  else{locationLabel.text = "LAT:" + (position.coords.latitude).toFixed(5) + " LON:" + (position.coords.longitude).toFixed(5) ;}
+  
 }
 
 function locationError(error) {
   console.log("Error: " + error.code,
               "Message: " + error.message);
 }
-
-  
-  
-  
-function locationError(error) {
-  console.log("Error: " + error.code,
-              "Message: " + error.message);
 }
- 
+  else {headLabel.text= "GPS NOT FOUND";locationLabel.text = "ALLOW PERMISSION TO START"; }
+
   checkAndUpdateBatteryLevel();
   
   //west rosewheel.groupTransform.rotate.angle = 90;
@@ -106,29 +108,6 @@ function locationError(error) {
                                                     
 });
 }
-
-
-
-if (Gyroscope) {
-   console.log("This device has a Gyroscope!");
-   const gyroscope = new Gyroscope({ frequency: 1 });
-   gyroscope.addEventListener("reading", () => {
-     console.log(
-      `Gyroscope Reading: \
-        timestamp=${gyroscope.timestamp}, \
-        [${gyroscope.x}, \
-        ${gyroscope.y}, \
-        ${gyroscope.z}]`
-     );
-     gyroLabel.text = "x:"+gyroscope.x +"-y:"+gyroscope.y+"-z:"+gyroscope.z;
-       
-   });
-   gyroscope.start();
-} else {
-   console.log("This device does NOT have a Gyroscope!");
- gyroLabel.text= "- - -";
-}
-
 
 
 function checkAndUpdateBatteryLevel() {
