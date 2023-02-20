@@ -23,9 +23,8 @@ let rose = document.getElementById("rose");
 let rosewheel = document.getElementById("rosewheel");
 let rosecircle = document.getElementById("rosecircle");
 let needle = document.getElementById("needle");
-person.image = "person.png";
-rose.image = "rose.png";
-needle.image = "needle.png";
+let object = document.getElementById("object");
+
 // Update the clock every second
 clock.granularity = "seconds";
 
@@ -35,6 +34,7 @@ const locationLabel = document.getElementById("locationLabel");
 const gyroLabel = document.getElementById("gyroLabel");
 const headLabel = document.getElementById("headLabel");
 const batteryLabel = document.getElementById("batteryLabel");
+const button1 = document.getElementById("button-1");
 let am = "am";
 // Update the <text> element every tick with the current time
 clock.ontick = (evt) => {
@@ -48,11 +48,28 @@ clock.ontick = (evt) => {
   let mins = util.zeroPad(today.getMinutes());
   let seconds = today.getSeconds();
   
+  button1.onclick = function(evt) { buttonnumber++; }
+  
+  
   if (util.zeroPad(hours) < 12){am = "AM";}
   else{am = "PM";}
   
-  if (buttonnumber == 1){background.image = "background1.jpeg";}
-  else{background.image = "background0.jpeg";}
+  if (buttonnumber == 1){
+    background.image = "background1.jpeg";
+    person.image = "blank.png";
+    rose.image = "blank.png";
+    needle.image = "littleneedle.png";
+    object.image = "x.png";
+  }else{
+      background.image = "background0.jpeg";
+      buttonnumber=0;
+      person.image = "person.png";
+      //x="$-168" y="$-168"
+      rose.image = "rose.png";
+      needle.image = "needle.png";
+      object.image = "blank.png";
+  }
+  
 
 if (geolocation && (appbit.permissions.granted("access_location")) && (appbit.permissions.granted("run_background"))){
   
@@ -62,6 +79,8 @@ function locationSuccess(position) {
     console.log("Latitude: " + position.coords.latitude,
                 "Longitude: " + position.coords.longitude);
    rosewheel.groupTransform.rotate.angle = position.coords.heading;
+  object.y = ( (-1)*(parseInt(position.coords.latitude)));
+  object.x = ( (parseInt(position.coords.longitude)));
   if(position.coords.speed > 0 ){rosecircle.animate("enable");}
   else{rosecircle.animate("disable");}
   if (position.coords.heading < 30 && position.coords.heading >= 0) {headLabel.text = "N: "+ (position.coords.speed).toFixed(2) + "m/s";}
