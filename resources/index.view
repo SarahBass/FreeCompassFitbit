@@ -10,9 +10,15 @@
    <text id="headLabel"  class="gyrolocation" />
    
  
-
+  <svg>
+  <g id= "rosecircle" pointer-events="visible" transform="translate(50%,50%)">
+    <animateTransform attributeType="rotate" from="0" to="3"  dur="2" begin="enable"/>
+    <svg><image id="rose" x="$-168" y="$-168" width="336" height="336" /></svg>
+     <animateTransform attributeType="rotate" to="0" from="3"  dur="1" begin="enable"/>
+  </g>
+</svg>
   
-   <svg><image id="rose" x="0" y="0" width="100%" height="100%" class="cuteanimate" /></svg>
+   
   
   <svg>
   <g id= "rosewheel" pointer-events="visible" transform="translate(50%,50%)">
@@ -22,8 +28,9 @@
   
   <g pointer-events="visible" transform="translate(50%,50%)">
     <animateTransform attributeType="rotate" from="0" to="360"  dur="3" />
-    <svg><image id="person" x="$-150" y="$-150" width="300" height="300"  /></svg>
+    <svg><image id="person" x="$-168" y="$-168" width="336" height="336"  /></svg>
   </g>
   
   
 </svg>
+
